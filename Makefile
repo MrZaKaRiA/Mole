@@ -1,6 +1,6 @@
 # Makefile for Mole
 
-.PHONY: all build clean check format test test-go verify release release-amd64 release-arm64 mod-download
+.PHONY: all build clean check format test test-go verify release release-amd64 release-arm64 macos-dmg mod-download
 
 # Output directory
 BIN_DIR := bin
@@ -68,6 +68,9 @@ release-arm64: mod-download
 	@echo "Building release binaries (arm64)..."
 	$(RELEASE_GO_ENV) GOOS=darwin GOARCH=arm64 $(GO) build -ldflags="$(LDFLAGS)" -o $(BIN_DIR)/$(ANALYZE)-darwin-arm64 $(ANALYZE_SRC)
 	$(RELEASE_GO_ENV) GOOS=darwin GOARCH=arm64 $(GO) build -ldflags="$(LDFLAGS)" -o $(BIN_DIR)/$(STATUS)-darwin-arm64 $(STATUS_SRC)
+
+macos-dmg:
+	./macos/MoleCompanion/script/package_dmg.sh
 
 clean:
 	@echo "Cleaning binaries..."
